@@ -153,7 +153,7 @@ public class ArithmeticController {
 						}
 					}
 
-					if (n.length() != 2) {
+					if (numbersArray.length != 2) {
 						throw new IncompleteArguementException(
 								"check arguement from the string command is not equal to 2 whole numbers");
 					}
@@ -172,7 +172,8 @@ public class ArithmeticController {
 					if (operator.getOperation_type().equals(ArithmeticEnums.SUBTRACTION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
 						model.setOperation_type(ArithmeticEnums.SUBTRACTION.name());
-						model.setResult(service.subtraction(Integer.parseInt(numbersArray[0]), Integer.parseInt(numbersArray[1])));
+						model.setResult(service.subtraction(Integer.parseInt(numbersArray[0]),
+								Integer.parseInt(numbersArray[1])));
 						model.setSlackUsername("Jayhmz");
 
 						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
@@ -181,7 +182,8 @@ public class ArithmeticController {
 					if (operator.getOperation_type().equals(ArithmeticEnums.DIVISION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
 						model.setOperation_type(ArithmeticEnums.DIVISION.name());
-						model.setResult(service.division(Integer.parseInt(numbersArray[0]), Integer.parseInt(numbersArray[1])));
+						model.setResult(
+								service.division(Integer.parseInt(numbersArray[0]), Integer.parseInt(numbersArray[1])));
 						model.setSlackUsername("Jayhmz");
 
 						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
@@ -190,7 +192,8 @@ public class ArithmeticController {
 					if (operator.getOperation_type().equals(ArithmeticEnums.MULTIPLICATION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
 						model.setOperation_type(ArithmeticEnums.MULTIPLICATION.name());
-						model.setResult(service.multiplication(Integer.parseInt(numbersArray[0]), Integer.parseInt(numbersArray[1])));
+						model.setResult(service.multiplication(Integer.parseInt(numbersArray[0]),
+								Integer.parseInt(numbersArray[1])));
 						model.setSlackUsername("Jayhmz");
 
 						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);

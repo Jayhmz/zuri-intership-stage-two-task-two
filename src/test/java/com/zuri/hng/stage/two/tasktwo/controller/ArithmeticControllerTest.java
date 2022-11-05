@@ -10,34 +10,27 @@ class ArithmeticControllerTest {
 	@Test
 	void test() {
 
-		String str = "addition 23 and 4";
+		String str = " hey please perform addition 23 and 4";
 
 		String[] split = str.split(" ");
+		
 		String numbers = str.replaceAll("\\D+", " ");
 		
 		Operators o = new Operators();
 		o.setOperation_type("addition 4");
 		
-		
-		System.out.println(numbers);
-		System.out.println(numbers.split(" ").toString());
-		
 		String[] n = numbers.split(" ");
+		
+		
+		
+		
+		
 		for (String string : n) {
 			
 			System.out.println(o.getOperation_type().contains(string));
 		}
 		
 		System.out.println(o.getOperation_type());
-		
-		
-		
-
-		
-		
-		
-		
-		
 		
 		
 		
