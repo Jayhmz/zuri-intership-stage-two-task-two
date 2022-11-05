@@ -66,9 +66,7 @@ public class ArithmeticController {
 		return new ResponseEntity<ResponseModel>(HttpStatus.BAD_REQUEST);
 	}
 
-	@PostMapping(value = "/", consumes = {
-			MediaType.APPLICATION_JSON_VALUE,
-	})
+	@PostMapping(value = "/")
 	public ResponseEntity<?> addInputs(@Valid @RequestBody Operators operator, BindingResult result) throws IncompleteArguementException {
 
 		//check for all null values
