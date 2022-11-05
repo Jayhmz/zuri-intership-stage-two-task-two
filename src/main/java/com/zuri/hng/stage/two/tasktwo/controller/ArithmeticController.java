@@ -129,7 +129,7 @@ public class ArithmeticController {
 
 			}
 
-			// check if operation type does not contain any number
+			// check if operation type does contain the operand and operators
 			for (String n : numbersArray) {
 
 				// check if operation_type is an enum type
