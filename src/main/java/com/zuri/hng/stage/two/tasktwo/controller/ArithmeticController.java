@@ -60,39 +60,73 @@ public class ArithmeticController {
 
 		String[] split = operator.getOperation_type().split(" ");
 		String numbers = operator.getOperation_type().replaceAll("\\D+", " ");
+		String[] numbersArray = numbers.split(" ");
 
 		// check if operator is null
 		if (operator != null) {
 
 			// check for null objects
-			if (operator.getX() == null && operator.getY() == null && operator.getOperation_type() == null) {
+			if (operator.getX() == null || operator.getY() == null || operator.getOperation_type() == null) {
 				return ResponseEntity.badRequest()
 						.body("Cannot process empty inputs, please ensure all required fields are filled");
 			}
 
+			// perform the calculation
 			if (operator.getX() != null && operator.getY() != null) {
 
-				// check if operation_type is the string to convert to code
+				
+				// check if operation_type is an enum type
 				if (operator.getOperation_type() != null && !(operator.getOperation_type().contains(numbers))) {
-
 					
-					System.out.println(operator.getOperation_type());
+					System.out.println(operator.getOperation_type().contains(numbers));
+					
+					if (operator.getOperation_type().equals(ArithmeticEnums.ADDITION.name().toLowerCase())) {
+						ResponseModel model = new ResponseModel();
+						model.setOperation_type(ArithmeticEnums.ADDITION.name());
+						model.setResult(service.addition(operator.getX(), operator.getY()));
+						model.setSlackUsername("Jayhmz");
 
+						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
+					}
+					if (operator.getOperation_type().equals(ArithmeticEnums.SUBTRACTION.name().toLowerCase())) {
+						ResponseModel model = new ResponseModel();
+						model.setOperation_type(ArithmeticEnums.SUBTRACTION.name());
+						model.setResult(service.subtraction(operator.getX(), operator.getY()));
+						model.setSlackUsername("Jayhmz");
+						
+						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
+					}
+					if (operator.getOperation_type().equals(ArithmeticEnums.DIVISION.name().toLowerCase())) {
+						ResponseModel model = new ResponseModel();
+						model.setOperation_type(ArithmeticEnums.DIVISION.name());
+						model.setResult(service.division(operator.getX(), operator.getY()));
+						model.setSlackUsername("Jayhmz");
+						
+						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
+					}
+					if (operator.getOperation_type().equals(ArithmeticEnums.MULTIPLICATION.name().toLowerCase())) {
+						ResponseModel model = new ResponseModel();
+						model.setOperation_type(ArithmeticEnums.MULTIPLICATION.name());
+						model.setResult(service.multiplication(operator.getX(), operator.getY()));
+						model.setSlackUsername("Jayhmz");
+						
+						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
+					}
+
+					return ResponseEntity.badRequest().body("OOPS! there is a wrong format of operation in the "
+							+ "operator_type, please ensure it contains"
+							+ " only commands like ('addition', 'subtraction', etc)");
 				}
 				
-				System.out.println("it contains numbers");
+				System.out.println(operator.getOperation_type().contains(numbers)+ "it contains numbers");
+
 			}
 
 //			int addition = service.addition(operator.getX(), operator.getY());
 //
-//			ResponseModel model = new ResponseModel();
-//			model.setOperation_type("Integer");
-//			model.setResult(addition);
-//			model.setSlackUsername("Jayhmz");
-//
-//			return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
-			
+
 		}
-		return null;
+		return ResponseEntity.badRequest()
+				.body("Cannot process empty inputs, please ensure all required fields are filled");
 	}
 }
