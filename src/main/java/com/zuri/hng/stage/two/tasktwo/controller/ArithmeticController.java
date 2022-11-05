@@ -103,7 +103,7 @@ public class ArithmeticController {
 						// addition enum
 						if (operator.getOperation_type().equals(ArithmeticEnums.ADDITION.name().toLowerCase())) {
 							ResponseModel model = new ResponseModel();
-							model.setOperation_type(ArithmeticEnums.ADDITION.name());
+							model.setOperation_type(ArithmeticEnums.ADDITION.name().toLowerCase());
 							model.setResult(service.addition(operator.getX(), operator.getY()));
 							model.setSlackUsername("Jayhmz");
 
@@ -112,7 +112,7 @@ public class ArithmeticController {
 						// subtraction enum
 						if (operator.getOperation_type().equals(ArithmeticEnums.SUBTRACTION.name().toLowerCase())) {
 							ResponseModel model = new ResponseModel();
-							model.setOperation_type(ArithmeticEnums.SUBTRACTION.name());
+							model.setOperation_type(ArithmeticEnums.SUBTRACTION.name().toLowerCase());
 							model.setResult(service.subtraction(operator.getX(), operator.getY()));
 							model.setSlackUsername("Jayhmz");
 
@@ -121,7 +121,7 @@ public class ArithmeticController {
 						// division enum
 						if (operator.getOperation_type().equals(ArithmeticEnums.DIVISION.name().toLowerCase())) {
 							ResponseModel model = new ResponseModel();
-							model.setOperation_type(ArithmeticEnums.DIVISION.name());
+							model.setOperation_type(ArithmeticEnums.DIVISION.name().toLowerCase());
 							model.setResult(service.division(operator.getX(), operator.getY()));
 							model.setSlackUsername("Jayhmz");
 
@@ -130,7 +130,7 @@ public class ArithmeticController {
 						// multiplication enum
 						if (operator.getOperation_type().equals(ArithmeticEnums.MULTIPLICATION.name().toLowerCase())) {
 							ResponseModel model = new ResponseModel();
-							model.setOperation_type(ArithmeticEnums.MULTIPLICATION.name());
+							model.setOperation_type(ArithmeticEnums.MULTIPLICATION.name().toLowerCase());
 							model.setResult(service.multiplication(operator.getX(), operator.getY()));
 							model.setSlackUsername("Jayhmz");
 
@@ -160,7 +160,7 @@ public class ArithmeticController {
 					// addition enum
 					if (operator.getOperation_type().equals(ArithmeticEnums.ADDITION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
-						model.setOperation_type(ArithmeticEnums.ADDITION.name());
+						model.setOperation_type(operator.getOperation_type());
 						model.setResult(service.addition(operator.getX(), operator.getY()));
 						model.setSlackUsername("Jayhmz");
 
@@ -169,7 +169,7 @@ public class ArithmeticController {
 					// subtraction enum
 					if (operator.getOperation_type().equals(ArithmeticEnums.SUBTRACTION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
-						model.setOperation_type(ArithmeticEnums.SUBTRACTION.name());
+						model.setOperation_type(operator.getOperation_type());
 						model.setResult(service.subtraction(operator.getX(), operator.getY()));
 						model.setSlackUsername("Jayhmz");
 
@@ -178,7 +178,7 @@ public class ArithmeticController {
 					// division enum
 					if (operator.getOperation_type().equals(ArithmeticEnums.DIVISION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
-						model.setOperation_type(ArithmeticEnums.DIVISION.name());
+						model.setOperation_type(operator.getOperation_type());
 						model.setResult(service.division(operator.getX(), operator.getY()));
 						model.setSlackUsername("Jayhmz");
 
@@ -187,7 +187,7 @@ public class ArithmeticController {
 					// multiplication enum
 					if (operator.getOperation_type().equals(ArithmeticEnums.MULTIPLICATION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
-						model.setOperation_type(ArithmeticEnums.MULTIPLICATION.name());
+						model.setOperation_type(operator.getOperation_type());
 						model.setResult(service.multiplication(operator.getX(), operator.getY()));
 						model.setSlackUsername("Jayhmz");
 
