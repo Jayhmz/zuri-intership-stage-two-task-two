@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class Operators {
 
-	Integer x, y;
+	private Integer x, y;
+	private String operation_type;
 }
