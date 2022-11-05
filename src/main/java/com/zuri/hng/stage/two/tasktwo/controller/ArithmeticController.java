@@ -59,9 +59,10 @@ public class ArithmeticController {
 	@PostMapping("/")
 	public ResponseEntity<?> addInputs(@RequestBody Operators operator) throws IncompleteArguementException {
 
-		String[] split = operator.getOperation_type().split(" ");
+		String[] stringSplit = operator.getOperation_type().split(" ");
 		String numbers = operator.getOperation_type().replaceAll("\\D+", " ");
-		String[] numbersArray = numbers.split(" ");
+		String numString = numbers.trim();
+		String[] numbersArray = numString.split(" ");
 
 		// check if operator is null
 		if (operator != null) {
@@ -135,16 +136,32 @@ public class ArithmeticController {
 				// check if operation_type is an enum type
 				if (operator.getOperation_type() != null && operator.getOperation_type().contains(n)) {
 
+					for (String word : stringSplit) {
+						if (word.contains("add")) {
+							operator.setOperation_type(ArithmeticEnums.ADDITION.name().toLowerCase());
+						}
+						if (word.contains("subtract")) {
+							operator.setOperation_type(ArithmeticEnums.SUBTRACTION.name().toLowerCase());
+						}
+						if (word.contains("multipl")) {
+							operator.setOperation_type(ArithmeticEnums.MULTIPLICATION.name().toLowerCase());
+						}
+						if (word.contains("divid")) {
+							operator.setOperation_type(ArithmeticEnums.DIVISION.name().toLowerCase());
+						}
+					}
+
 					if (n.length() != 2) {
 						throw new IncompleteArguementException(
 								"check arguement from the string command is not equal to 2 whole numbers");
 					}
-					
+
 					// addition enum
 					if (operator.getOperation_type().equals(ArithmeticEnums.ADDITION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
 						model.setOperation_type(ArithmeticEnums.ADDITION.name());
-						model.setResult(service.addition(operator.getX(), operator.getY()));
+						model.setResult(
+								service.addition(Integer.parseInt(numbersArray[0]), Integer.parseInt(numbersArray[1])));
 						model.setSlackUsername("Jayhmz");
 
 						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
@@ -153,7 +170,7 @@ public class ArithmeticController {
 					if (operator.getOperation_type().equals(ArithmeticEnums.SUBTRACTION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
 						model.setOperation_type(ArithmeticEnums.SUBTRACTION.name());
-						model.setResult(service.subtraction(operator.getX(), operator.getY()));
+						model.setResult(service.subtraction(Integer.parseInt(numbersArray[0]), Integer.parseInt(numbersArray[1])));
 						model.setSlackUsername("Jayhmz");
 
 						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
@@ -162,7 +179,7 @@ public class ArithmeticController {
 					if (operator.getOperation_type().equals(ArithmeticEnums.DIVISION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
 						model.setOperation_type(ArithmeticEnums.DIVISION.name());
-						model.setResult(service.division(operator.getX(), operator.getY()));
+						model.setResult(service.division(Integer.parseInt(numbersArray[0]), Integer.parseInt(numbersArray[1])));
 						model.setSlackUsername("Jayhmz");
 
 						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
@@ -171,7 +188,7 @@ public class ArithmeticController {
 					if (operator.getOperation_type().equals(ArithmeticEnums.MULTIPLICATION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
 						model.setOperation_type(ArithmeticEnums.MULTIPLICATION.name());
-						model.setResult(service.multiplication(operator.getX(), operator.getY()));
+						model.setResult(service.multiplication(Integer.parseInt(numbersArray[0]), Integer.parseInt(numbersArray[1])));
 						model.setSlackUsername("Jayhmz");
 
 						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
@@ -186,7 +203,6 @@ public class ArithmeticController {
 			}
 
 		}
-		return ResponseEntity.badRequest()
-				.body("INVALID INPUTS");
+		return ResponseEntity.badRequest().body("INVALID INPUTS");
 	}
 }
