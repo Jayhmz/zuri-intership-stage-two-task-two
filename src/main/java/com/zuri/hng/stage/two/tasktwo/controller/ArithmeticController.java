@@ -1,8 +1,12 @@
 package com.zuri.hng.stage.two.tasktwo.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,9 +62,18 @@ public class ArithmeticController {
 		return new ResponseEntity<ResponseModel>(HttpStatus.BAD_REQUEST);
 	}
 
-	@PostMapping("/")
-	public ResponseEntity<?> addInputs(@RequestBody Operators operator) throws IncompleteArguementException {
+	@PostMapping(value = "/", consumes = {
+			MediaType.APPLICATION_JSON_VALUE,
+	}, produces = {
+			MediaType.APPLICATION_JSON_VALUE
+	})
+	public ResponseEntity<?> addInputs(@Valid @RequestBody Operators operator, BindingResult result) throws IncompleteArguementException {
 
+		if(result.hasErrors()) {
+			throw new NullPointerException("request body cannot be empty");
+		}
+		
+		
 		String[] stringSplit = operator.getOperation_type().split(" ");
 		String numbers = operator.getOperation_type().replaceAll("\\D+", " ");
 		String numString = numbers.trim();

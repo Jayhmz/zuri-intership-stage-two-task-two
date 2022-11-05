@@ -1,10 +1,16 @@
 package com.zuri.hng.stage.two.tasktwo.model;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 
 @Data
 public class Operators {
 
-	private Integer x, y;
+	@NotNull
+	private Integer x;
+	@NotNull
+	private Integer y;
+	@NotNull
 	private String operation_type;
 }
