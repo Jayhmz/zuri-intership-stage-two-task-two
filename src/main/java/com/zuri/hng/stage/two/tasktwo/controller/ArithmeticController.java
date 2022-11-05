@@ -67,13 +67,13 @@ public class ArithmeticController {
 	}
 
 	@PostMapping(value = "/")
-	public ResponseEntity<?> addInputs(@Valid @RequestBody Operators operator, BindingResult result) throws IncompleteArguementException {
+	public ResponseEntity<?> addInputs(@RequestBody Operators operator) throws IncompleteArguementException {
 
 		//check for all null values
-		if(result.hasErrors()) {
-			throw new NullPointerException("request body cannot be empty");
-		}
-		
+//		if(result.hasErrors()) {
+//			throw new NullPointerException("request body cannot be empty");
+//		}
+//		
 		
 		String[] stringSplit = operator.getOperation_type().split(" ");
 		String numbers = operator.getOperation_type().replaceAll("\\D+", " ");
