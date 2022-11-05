@@ -66,15 +66,16 @@ public class ArithmeticController {
 		return new ResponseEntity<ResponseModel>(HttpStatus.BAD_REQUEST);
 	}
 
-	@PostMapping(value = "/")
-	public ResponseEntity<?> addInputs(@RequestBody Operators operator) throws IncompleteArguementException {
+	@PostMapping(value = "/", consumes = { MediaType.APPLICATION_JSON_VALUE, }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<?> addInputs(@Valid @RequestBody Operators operator, BindingResult result)
+			throws IncompleteArguementException {
 
-		//check for all null values
-//		if(result.hasErrors()) {
-//			throw new NullPointerException("request body cannot be empty");
-//		}
-//		
-		
+		// check for all null values
+		if (result.hasErrors()) {
+			throw new NullPointerException("request body cannot be empty");
+		}
+
 		String[] stringSplit = operator.getOperation_type().split(" ");
 		String numbers = operator.getOperation_type().replaceAll("\\D+", " ");
 		String numString = numbers.trim();
@@ -135,22 +136,12 @@ public class ArithmeticController {
 
 							return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
 						}
+						return ResponseEntity.badRequest()
+								.body("OOPS! there is a wrong format of operation in the "
+										+ "operator_type, please ensure it contains"
+										+ " only commands like ('addition', 'subtraction', etc)");
 
 					}
-					System.out.println(operator.getOperation_type().contains(numbers) + "it contains numbers");
-					return ResponseEntity.badRequest()
-							.body("OOPS! there is a wrong format of operation in the "
-									+ "operator_type, please ensure it contains"
-									+ " only commands like ('addition', 'subtraction', etc)");
-				}
-
-			}
-
-			// check if operation type does contain the operand and operators
-			for (String n : numbersArray) {
-
-				// check if operation_type is an enum type
-				if (operator.getOperation_type() != null && operator.getOperation_type().contains(n)) {
 
 					for (String word : stringSplit) {
 						if (word.contains("add")) {
@@ -166,18 +157,11 @@ public class ArithmeticController {
 							operator.setOperation_type(ArithmeticEnums.DIVISION.name().toLowerCase());
 						}
 					}
-
-					if (numbersArray.length != 2) {
-						throw new IncompleteArguementException(
-								"check arguement from the string command is not equal to 2 whole numbers");
-					}
-
 					// addition enum
 					if (operator.getOperation_type().equals(ArithmeticEnums.ADDITION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
 						model.setOperation_type(ArithmeticEnums.ADDITION.name());
-						model.setResult(
-								service.addition(Integer.parseInt(numbersArray[0]), Integer.parseInt(numbersArray[1])));
+						model.setResult(service.addition(operator.getX(), operator.getY()));
 						model.setSlackUsername("Jayhmz");
 
 						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
@@ -186,8 +170,7 @@ public class ArithmeticController {
 					if (operator.getOperation_type().equals(ArithmeticEnums.SUBTRACTION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
 						model.setOperation_type(ArithmeticEnums.SUBTRACTION.name());
-						model.setResult(service.subtraction(Integer.parseInt(numbersArray[0]),
-								Integer.parseInt(numbersArray[1])));
+						model.setResult(service.subtraction(operator.getX(), operator.getY()));
 						model.setSlackUsername("Jayhmz");
 
 						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
@@ -196,8 +179,7 @@ public class ArithmeticController {
 					if (operator.getOperation_type().equals(ArithmeticEnums.DIVISION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
 						model.setOperation_type(ArithmeticEnums.DIVISION.name());
-						model.setResult(
-								service.division(Integer.parseInt(numbersArray[0]), Integer.parseInt(numbersArray[1])));
+						model.setResult(service.division(operator.getX(), operator.getY()));
 						model.setSlackUsername("Jayhmz");
 
 						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
@@ -206,19 +188,14 @@ public class ArithmeticController {
 					if (operator.getOperation_type().equals(ArithmeticEnums.MULTIPLICATION.name().toLowerCase())) {
 						ResponseModel model = new ResponseModel();
 						model.setOperation_type(ArithmeticEnums.MULTIPLICATION.name());
-						model.setResult(service.multiplication(Integer.parseInt(numbersArray[0]),
-								Integer.parseInt(numbersArray[1])));
+						model.setResult(service.multiplication(operator.getX(), operator.getY()));
 						model.setSlackUsername("Jayhmz");
 
 						return new ResponseEntity<ResponseModel>(model, HttpStatus.OK);
 					}
 
 				}
-				System.out.println(operator.getOperation_type().contains(numbers) + "it contains numbers");
-				return ResponseEntity.badRequest()
-						.body("OOPS! there is a wrong format of operation in the "
-								+ "operator_type, please ensure it contains"
-								+ " only commands like ('addition', 'subtraction', etc)");
+
 			}
 
 		}
