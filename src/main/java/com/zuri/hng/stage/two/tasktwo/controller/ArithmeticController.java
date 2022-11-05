@@ -69,6 +69,7 @@ public class ArithmeticController {
 	})
 	public ResponseEntity<?> addInputs(@Valid @RequestBody Operators operator, BindingResult result) throws IncompleteArguementException {
 
+		//check for all null values
 		if(result.hasErrors()) {
 			throw new NullPointerException("request body cannot be empty");
 		}
